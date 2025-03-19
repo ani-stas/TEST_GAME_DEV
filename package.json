@@ -1,0 +1,16 @@
+{
+  "name": "test_task_game_dev",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "vite build",
+    "start": "npx vite"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "pixi.js": "^8.8.1",
+    "vite": "^6.2.2"
+  }
+}
