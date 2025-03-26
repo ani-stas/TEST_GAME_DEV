@@ -10,25 +10,11 @@ export class StarComponent extends BaseComponent {
   }
 
   create(input: IStar): Graphics {
-    const star = this.drawStar(input);
-
-    if (input.fill) star.fill(input.fill);
-    if (input.stroke) star.fill(input.stroke);
-
-    if (input.interactive) {
-      star.interactive = true;
-      star.cursor = CursorStyles.POINTER;
-    }
-
-    return star;
-  }
-
-  private drawStar(input: IStar): Graphics {
     const { x, y, outerRadius, innerRadius } = input;
-    const star = new Graphics();
 
-    const step = Math.PI / input.numberOfPoints; // Angle step between points
-    let angle = -TWO_PI_RADIANS; // Start at the top of the star
+    const star = new Graphics();
+    const step = Math.PI / input.numberOfPoints; // angle step between points
+    let angle = -TWO_PI_RADIANS; // start at the top of the star
 
     star.moveTo(
       x + outerRadius * Math.cos(angle),
@@ -45,6 +31,14 @@ export class StarComponent extends BaseComponent {
     }
 
     star.closePath();
+
+    if (input.fill) star.fill(input.fill);
+    if (input.stroke) star.fill(input.stroke);
+
+    if (input.interactive) {
+      star.interactive = true;
+      star.cursor = CursorStyles.POINTER;
+    }
 
     return star;
   }

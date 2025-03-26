@@ -1,6 +1,6 @@
 export const SHAPE_GENERATION_INTERVAL = 1000; // in seconds
 
-export const GRAVITY = 0.01;
+export const GRAVITY = 1;
 export const SHAPES_PER_SECOND = 1;
 export const SHAPES_COUNT = 0;
 export const SHAPES_TOTAL_AREA = 0;

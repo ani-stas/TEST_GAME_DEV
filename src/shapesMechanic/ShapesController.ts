@@ -1,8 +1,8 @@
-import { Application, FederatedPointerEvent, Graphics } from "pixi.js";
+import { Application, FederatedPointerEvent } from "pixi.js";
 import { ShapesModel } from "./ShapesModel";
 import { ShapesView } from "./ShapesView";
 import { ClickEvents, EmittedEvents, UpdateEvents } from "../common/enums";
-import { UpdateInfoPanel } from "./interfaces";
+import { IShape, IShapeObj, UpdateInfoPanel } from "./interfaces";
 import { SHAPE_GENERATION_INTERVAL } from "./constants";
 
 export class ShapesController {
@@ -59,34 +59,30 @@ export class ShapesController {
     });
   }
 
-  private handleShapeCreation(input: any): void {
+  private handleShapeCreation(input: IShape): void {
     const shapeObj = this.view.createRandomShape(input);
     const shapeArea = this.view.calculateArea(shapeObj);
 
+    console.log(shapeObj.instance);
+
     this.model.addShape(shapeArea);
     this.handleShapeFall(shapeObj);
-    this.addClickToRemove(shapeObj);
+    this.handleRemoveShape(shapeObj);
   }
 
-  private handleShapeFall(shapeObj: any): void {
-    let velocity = 0;
-
+  private handleShapeFall(shapeObj: IShapeObj): void {
     const update = () => {
       if (!shapeObj.shape || !shapeObj.shape.parent) {
         this.view.getApp().ticker.remove(update);
-
         return;
       }
 
-      velocity += this.model.gravity;
-      shapeObj.shape.y += velocity;
+      shapeObj.shape.y += this.model.gravity;
 
       const shapeBounds = shapeObj.shape.getBounds();
       const parentBounds = this.view.container.getBounds();
 
       if (shapeBounds.minY >= parentBounds.maxY) {
-        velocity = 0;
-
         const shapeArea = this.view.calculateArea(shapeObj);
 
         this.model.removeShape(shapeArea);
@@ -99,7 +95,7 @@ export class ShapesController {
     this.view.getApp().ticker.add(update);
   }
 
-  private addClickToRemove(shapeObj: any): void {
+  private handleRemoveShape(shapeObj: IShapeObj): void {
     shapeObj.shape.on(
       ClickEvents.POINTERDOWN,
       (event: FederatedPointerEvent) => {
@@ -118,7 +114,7 @@ export class ShapesController {
       for (let i = 0; i < this.model.shapesPerSecond; i++) {
         this.handleShapeCreation({
           x: Math.random() * this.view.container.width,
-          y: this.view.container.y,
+          y: this.view.container.y - 100,
         });
       }
     }, interval);

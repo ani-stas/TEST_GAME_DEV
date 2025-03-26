@@ -10,21 +10,10 @@ export class EllipseComponent extends BaseComponent {
   }
 
   create(input: IEllipse): Graphics {
-    const ellipse = this.drawEllipse(input);
-
-    if (input.interactive) {
-      ellipse.interactive = true;
-      ellipse.cursor = CursorStyles.POINTER;
-    }
-
-    return ellipse;
-  }
-
-  private drawEllipse(input: IEllipse): Graphics {
     const { x, y, width, height } = input;
     const ellipse = new Graphics();
-    const step = Math.PI / input.step;
 
+    const step = Math.PI / input.step;
     ellipse.moveTo(x + width, y);
 
     for (let theta = 0; theta <= TWO_PI_RADIANS; theta += step) {
@@ -34,10 +23,15 @@ export class EllipseComponent extends BaseComponent {
       ellipse.lineTo(px, py);
     }
 
+    ellipse.closePath();
+
     if (input.fill) ellipse.fill(input.fill);
     if (input.stroke) ellipse.stroke(input.stroke);
 
-    ellipse.closePath();
+    if (input.interactive) {
+      ellipse.interactive = true;
+      ellipse.cursor = CursorStyles.POINTER;
+    }
 
     return ellipse;
   }

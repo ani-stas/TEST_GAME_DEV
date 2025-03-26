@@ -9,17 +9,17 @@ export class TriangleComponent extends BaseComponent {
   }
 
   create(input: ISideShape): Graphics {
-    const { x = 100, y = 100, size } = input;
+    const { x, y, size } = input;
     const triangle = new Graphics();
 
     triangle
-      .moveTo(x, y - size / 2) // Top point
-      .lineTo(x - size / 2, y + size / 2) // Bottom-left
-      .lineTo(x + size / 2, y + size / 2) // Bottom-right
+      .moveTo(x, y - size / 2) // top point
+      .lineTo(x - size / 2, y + size / 2) // bottom-left point
+      .lineTo(x + size / 2, y + size / 2) // bottom-right pint
       .closePath();
 
-    triangle.fill(input.fill || 0x000000);
-    triangle.stroke(input.stroke || 0x000000);
+    if (input.fill) triangle.fill(input.fill);
+    if (input.stroke) triangle.fill(input.stroke);
 
     if (input.interactive) {
       triangle.interactive = true;

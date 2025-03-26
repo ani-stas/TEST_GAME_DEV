@@ -6,6 +6,7 @@ export const infoPlateLeftSettings = {
   width: 400,
   height: 50,
   fill: "#ebe79d",
+  stroke: "#000000",
   text: { content: "Number of current shapes:" },
   value: 0,
 };

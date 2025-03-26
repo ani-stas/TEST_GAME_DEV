@@ -6,6 +6,7 @@ export const infoPlateRightSettings = {
   width: 400,
   height: 50,
   fill: "#ebe79d",
+  stroke: "#000000",
   text: { content: "Surphase area occupied by shapes:" },
   value: 0,
 };

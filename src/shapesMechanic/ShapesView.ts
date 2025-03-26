@@ -30,10 +30,12 @@ import {
   RECT_HEIGHT_KOEF,
 } from "./constants";
 import { shapeParamsMapper } from "../common/utils";
+import { IShape, IShapeObj } from "./interfaces";
 
 export class ShapesView extends BaseComponent {
   public container: Container;
   public rectangle: RectangleComponent;
+  public rectangleShape: RectangleComponent;
   private infoPlateLeft: InfoPlateComponent;
   private infoPlateRight: InfoPlateComponent;
   private plusMinusLeft: PlusMinusComponent;
@@ -45,7 +47,6 @@ export class ShapesView extends BaseComponent {
   public fiveSideShape: FiveSideShapeComponent;
   public sixSideShape: SixSideShapeComponent;
   public star: StarComponent;
-  public shape: any;
   public eventEmitter: EventEmitter;
 
   constructor(app: Application) {
@@ -53,6 +54,7 @@ export class ShapesView extends BaseComponent {
 
     this.container = new Container(containerSettings);
     this.rectangle = new RectangleComponent(app);
+    this.rectangleShape = new RectangleComponent(app);
     this.infoPlateLeft = new InfoPlateComponent(app);
     this.infoPlateRight = new InfoPlateComponent(app);
     this.mask = new MaskComponent(app);
@@ -61,7 +63,6 @@ export class ShapesView extends BaseComponent {
     this.circle = new CircleComponent(app);
     this.ellipse = new EllipseComponent(app);
     this.triangle = new TriangleComponent(app);
-    this.rectangle = new RectangleComponent(app);
     this.fiveSideShape = new FiveSideShapeComponent(app);
     this.sixSideShape = new SixSideShapeComponent(app);
     this.star = new StarComponent(app);
@@ -80,12 +81,12 @@ export class ShapesView extends BaseComponent {
     this.addElemToScene(this.container);
   }
 
-  createRandomShape(input: any): any {
+  createRandomShape(input: IShape): IShapeObj {
     const shapes = [
       this.circle,
       this.ellipse,
       this.triangle,
-      this.rectangle,
+      this.rectangleShape,
       this.fiveSideShape,
       this.sixSideShape,
       this.star,
@@ -97,13 +98,16 @@ export class ShapesView extends BaseComponent {
     const shapeKey = randomShape.constructor.name;
     const shapeParams = shapeParamsMapper[shapeKey] || {};
 
-    const shape = randomShape.create({ ...shapeParams, ...input });
+    const shape = randomShape.create({
+      ...shapeParams,
+      ...input,
+    });
     this.container.addChild(shape);
 
     return { shape, instance: randomShape };
   }
 
-  calculateArea(shapeObj: any): number {
+  calculateArea(shapeObj: IShapeObj): number {
     const shapeName = shapeObj.instance.constructor.name;
     const shapeSettings = shapeParamsMapper[shapeName];
 

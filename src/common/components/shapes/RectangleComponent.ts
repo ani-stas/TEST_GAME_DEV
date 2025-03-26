@@ -13,9 +13,8 @@ export class RectangleComponent extends BaseComponent {
 
     rect.rect(input.x, input.y, input.width, input.height);
     rect.fill(input.fill || 0x000000);
-    rect.stroke(input.stroke || 0x000000);
 
-    console.log('input', input)
+    if (input.stroke) rect.stroke(input.stroke);
 
     if (input.interactive) {
       rect.interactive = true;
