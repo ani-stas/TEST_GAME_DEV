@@ -1,8 +1,10 @@
 import { IText } from "./text.interface";
 
 export interface IButton {
-  x: number;
-  y: number;
+  containerX: number;
+  containerY: number;
+  buttonX: number;
+  buttonY: number;
   width: number;
   height: number;
   callback: Function;

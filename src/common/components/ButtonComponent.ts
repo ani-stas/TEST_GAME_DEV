@@ -21,7 +21,11 @@ export class ButtonComponent extends BaseComponent {
   create(input: IButton): ContainerChild {
     const container = new Container();
 
-    const button = this.rectangle.create(input);
+    const button = this.rectangle.create({
+      ...input,
+      x: input.buttonX,
+      y: input.buttonY,
+    });
     button.interactive = input.interactive ?? true;
     button.cursor = CursorStyles.POINTER;
 
@@ -41,8 +45,8 @@ export class ButtonComponent extends BaseComponent {
       container.addChild(text);
     }
 
-    container.x = input.x;
-    container.y = input.y;
+    container.x = input.containerX;
+    container.y = input.containerY;
 
     return container;
   }

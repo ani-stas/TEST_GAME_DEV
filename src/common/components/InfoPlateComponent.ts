@@ -17,7 +17,11 @@ export class InfoPlateComponent extends BaseComponent {
   create(input: IInfoPlate): Container {
     const container = new Container();
 
-    const plate = this.rectangle.create(input);
+    const plate = this.rectangle.create({
+      ...input,
+      x: input.plateX,
+      y: input.plateY,
+    });
 
     const text = this.text.create(input.text);
     text.anchor.set(0.5);
@@ -27,8 +31,8 @@ export class InfoPlateComponent extends BaseComponent {
     container.addChild(plate);
     container.addChild(text);
 
-    container.x = input.x;
-    container.y = input.y;
+    container.x = input.containerX;
+    container.y = input.containerY;
 
     return container;
   }

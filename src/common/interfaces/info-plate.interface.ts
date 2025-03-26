@@ -1,8 +1,10 @@
 import { IText } from "./text.interface";
 
 export interface IInfoPlate {
-  x: number;
-  y: number;
+  containerX: number;
+  containerY: number;
+  plateX: number;
+  plateY: number;
   width: number;
   height: number;
   text: IText;

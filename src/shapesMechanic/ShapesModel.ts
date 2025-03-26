@@ -5,7 +5,7 @@ import {
   SHAPES_COUNT,
   SHAPES_PER_SECOND,
   SHAPES_TOTAL_AREA,
-} from "./contants";
+} from "./constants";
 
 export class ShapesModel {
   public eventEmitter: EventEmitter;
@@ -75,8 +75,8 @@ export class ShapesModel {
 
   private emitShapesUpdate(): void {
     this.eventEmitter.emit(UpdateEvents.SHAPES_UPDATE, {
-      circlesCount: this.shapesCount,
-      circlesTotalArea: this.shapesTotalArea,
+      shapesCount: this.shapesCount,
+      shapesTotalArea: this.shapesTotalArea,
     });
   }
 }

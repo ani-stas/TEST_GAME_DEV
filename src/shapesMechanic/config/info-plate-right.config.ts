@@ -1,6 +1,8 @@
 export const infoPlateRightSettings = {
-  x: 400,
-  y: 0,
+  plateX: 0,
+  plateY: 0,
+  containerX: 400,
+  containerY: 0,
   width: 400,
   height: 50,
   fill: "#ebe79d",

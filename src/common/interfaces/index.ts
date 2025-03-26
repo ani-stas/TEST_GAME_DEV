@@ -6,3 +6,6 @@ export * from "./plus-minus.interface";
 export * from "./info-plate.interface";
 export * from "./rectangle.interface";
 export * from "./circle.interface";
+export * from "./side-shape.interface";
+export * from "./ellipse.interface";
+export * from "./star.interface";

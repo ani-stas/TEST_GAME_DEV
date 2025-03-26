@@ -1,4 +1,4 @@
 export interface UpdateInfoPanel {
-  circlesCount: number;
-  circlesTotalArea: number;
+  shapesCount: number;
+  shapesTotalArea: number;
 }
