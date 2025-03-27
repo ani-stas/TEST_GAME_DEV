@@ -3,6 +3,7 @@ export interface IRectangle {
   y: number;
   width: number;
   height: number;
+  alignCenter?: boolean;
   fill?: string;
   stroke?: string;
   interactive?: boolean;

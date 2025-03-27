@@ -11,7 +11,16 @@ export class RectangleComponent extends BaseComponent {
   create(input: IRectangle): Graphics {
     const rect = new Graphics();
 
-    rect.rect(input.x, input.y, input.width, input.height);
+    if (input.alignCenter) {
+      rect.rect(
+        input.x - input.width / 2,
+        input.y - input.height / 2,
+        input.width,
+        input.height
+      );
+    } else {
+      rect.rect(input.x, input.y, input.width, input.height);
+    }
     rect.fill(input.fill || 0x000000);
 
     if (input.stroke) rect.stroke(input.stroke);

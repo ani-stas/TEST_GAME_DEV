@@ -4,4 +4,5 @@ export const rectangleShapeSettings = {
   fill: "0x4cd6f5",
   stroke: "0x4cd6f5",
   interactive: true,
+  alignCenter: true,
 };
