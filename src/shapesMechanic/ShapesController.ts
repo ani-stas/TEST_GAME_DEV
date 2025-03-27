@@ -63,8 +63,6 @@ export class ShapesController {
     const shapeObj = this.view.createRandomShape(input);
     const shapeArea = this.view.calculateArea(shapeObj);
 
-    console.log(shapeObj.instance);
-
     this.model.addShape(shapeArea);
     this.handleShapeFall(shapeObj);
     this.handleRemoveShape(shapeObj);
