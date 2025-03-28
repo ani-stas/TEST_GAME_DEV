@@ -29,24 +29,22 @@ import {
   PLUS_MUNIS_RIGHT_Y_KOEF,
   RECT_HEIGHT_KOEF,
 } from "./constants";
-import { shapeParamsMapper } from "../common/utils";
-import { IShape, IShapeObj } from "./interfaces";
+import {
+  getRandomHexColor,
+  getRandomShape,
+  shapeParamsMapper,
+} from "../common/utils";
+import { IShape, IShapeObj, ShapeComponent } from "./interfaces";
 
 export class ShapesView extends BaseComponent {
   public container: Container;
   public rectangle: RectangleComponent;
-  public rectangleShape: RectangleComponent;
   private infoPlateLeft: InfoPlateComponent;
   private infoPlateRight: InfoPlateComponent;
   private plusMinusLeft: PlusMinusComponent;
   private plusMinusRight: PlusMinusComponent;
   private mask: MaskComponent;
-  public circle: CircleComponent;
-  public ellipse: EllipseComponent;
-  public triangle: TriangleComponent;
-  public fiveSideShape: FiveSideShapeComponent;
-  public sixSideShape: SixSideShapeComponent;
-  public star: StarComponent;
+  private shapes: ShapeComponent[];
   public eventEmitter: EventEmitter;
 
   constructor(app: Application) {
@@ -54,19 +52,22 @@ export class ShapesView extends BaseComponent {
 
     this.container = new Container(containerSettings);
     this.rectangle = new RectangleComponent(app);
-    this.rectangleShape = new RectangleComponent(app);
     this.infoPlateLeft = new InfoPlateComponent(app);
     this.infoPlateRight = new InfoPlateComponent(app);
     this.mask = new MaskComponent(app);
     this.plusMinusLeft = new PlusMinusComponent(app);
     this.plusMinusRight = new PlusMinusComponent(app);
-    this.circle = new CircleComponent(app);
-    this.ellipse = new EllipseComponent(app);
-    this.triangle = new TriangleComponent(app);
-    this.fiveSideShape = new FiveSideShapeComponent(app);
-    this.sixSideShape = new SixSideShapeComponent(app);
-    this.star = new StarComponent(app);
     this.eventEmitter = new EventEmitter();
+
+    this.shapes = [
+      new CircleComponent(app),
+      new EllipseComponent(app),
+      new TriangleComponent(app),
+      new RectangleComponent(app),
+      new FiveSideShapeComponent(app),
+      new SixSideShapeComponent(app),
+      new StarComponent(app),
+    ];
 
     this.createScene();
   }
@@ -82,18 +83,8 @@ export class ShapesView extends BaseComponent {
   }
 
   createRandomShape(input: IShape): IShapeObj {
-    const shapes = [
-      this.circle,
-      this.ellipse,
-      this.triangle,
-      this.rectangleShape,
-      this.fiveSideShape,
-      this.sixSideShape,
-      this.star,
-    ];
-
-    const randomShapeIndex = Math.floor(Math.random() * shapes.length);
-    const randomShape = shapes[randomShapeIndex];
+    const randomShape = getRandomShape(this.shapes);
+    const randomShapeColor = getRandomHexColor();
 
     const shapeKey = randomShape.constructor.name;
     const shapeParams = shapeParamsMapper[shapeKey] || {};
@@ -101,6 +92,7 @@ export class ShapesView extends BaseComponent {
     const shape = randomShape.create({
       ...shapeParams,
       ...input,
+      fill: randomShapeColor,
     });
     this.container.addChild(shape);
 

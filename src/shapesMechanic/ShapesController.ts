@@ -3,7 +3,7 @@ import { ShapesModel } from "./ShapesModel";
 import { ShapesView } from "./ShapesView";
 import { ClickEvents, EmittedEvents, UpdateEvents } from "../common/enums";
 import { IShape, IShapeObj, UpdateInfoPanel } from "./interfaces";
-import { SHAPE_GENERATION_INTERVAL } from "./constants";
+import { SHAPE_GENERATION_INTERVAL, SHAPES_OFFSET_Y } from "./constants";
 
 export class ShapesController {
   private model: ShapesModel;
@@ -108,14 +108,25 @@ export class ShapesController {
   }
 
   private startShapeGeneration(interval: number): void {
-    setInterval(() => {
-      for (let i = 0; i < this.model.shapesPerSecond; i++) {
-        this.handleShapeCreation({
-          x: Math.random() * this.view.container.width,
-          y: this.view.container.y - 100,
-        });
+    let lastTime = performance.now();
+
+    const generateShapes = (currentTime: number) => {
+      requestAnimationFrame(generateShapes);
+      const deltaTime = currentTime - lastTime;
+
+      if (deltaTime > interval) {
+        for (let i = 0; i < this.model.shapesPerSecond; i++) {
+          this.handleShapeCreation({
+            x: Math.random() * this.view.container.width,
+            y: this.view.container.y - SHAPES_OFFSET_Y,
+          });
+        }
+
+        lastTime = currentTime - (deltaTime % interval);
       }
-    }, interval);
+    };
+
+    requestAnimationFrame(generateShapes);
   }
 
   private updateInfoPanel(input: UpdateInfoPanel): void {

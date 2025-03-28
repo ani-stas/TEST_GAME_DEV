@@ -32,7 +32,6 @@ export class ShapesModel {
 
   increaseShapesPerSecond(): number {
     this.shapesPerSecond++;
-    this.emitShapesPerSecondUpdate();
 
     return this.shapesPerSecond;
   }
@@ -40,7 +39,6 @@ export class ShapesModel {
   decreaseShapesPerSecond(): number {
     if (this.shapesPerSecond > SHAPES_PER_SECOND) {
       this.shapesPerSecond--;
-      this.emitShapesPerSecondUpdate();
     }
 
     return this.shapesPerSecond;
@@ -48,7 +46,6 @@ export class ShapesModel {
 
   increaseGravity(): number {
     this.gravity = +(this.gravity + GRAVITY).toFixed(2);
-    this.emitGravityUpdate();
 
     return this.gravity;
   }
@@ -56,21 +53,9 @@ export class ShapesModel {
   decreaseGravity(): number {
     if (this.gravity > GRAVITY) {
       this.gravity = +(this.gravity - GRAVITY).toFixed(2);
-      this.emitGravityUpdate();
     }
 
     return this.gravity;
-  }
-
-  private emitShapesPerSecondUpdate(): void {
-    this.eventEmitter.emit(
-      UpdateEvents.SHAPES_PER_SECOND_UPDATE,
-      this.shapesPerSecond
-    );
-  }
-
-  private emitGravityUpdate(): void {
-    this.eventEmitter.emit(UpdateEvents.GRAVITY_UPDATE, this.gravity);
   }
 
   private emitShapesUpdate(): void {
