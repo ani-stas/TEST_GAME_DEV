@@ -114,7 +114,7 @@ export class ShapesController {
       requestAnimationFrame(generateShapes);
       const deltaTime = currentTime - lastTime;
 
-      if (deltaTime > interval) {
+      if (deltaTime >= interval) {
         for (let i = 0; i < this.model.shapesPerSecond; i++) {
           this.handleShapeCreation({
             x: Math.random() * this.view.container.width,
